@@ -260,3 +260,22 @@ Download the APK, install, and let Hisab do the work for you.
 <p align="center">
   Made with ❤️ by Daniel Gidey for You
 </p>
+
+<p align="center">
+  <b>📬 Connect with me:</b><br/>
+  <a href="tel:+251945012123">
+    <img src="https://img.shields.io/badge/Phone-green?style=for-the-badge&logo=phone"/>
+  </a>
+  <a href="https://t.me/living_guy">
+    <img src="https://img.shields.io/badge/Telegram-living__guy-blue?style=for-the-badge&logo=telegram"/>
+  </a>
+  <a href="https://github.com/dan-seng">
+    <img src="https://img.shields.io/badge/Github-dan--seng-black?style=for-the-badge&logo=github"/>
+  </a>
+  <a href="https://linkedin.com/in/danielgidey">
+    <img src="https://img.shields.io/badge/LinkedIn-danielgidey-blue?style=for-the-badge&logo=linkedin"/>
+  </a>
+  <a href="https://daniel-gidey.vercel.app">
+    <img src="https://img.shields.io/badge/Portfolio-daniel__gidey.vercel.app-green?style=for-the-badge&logo=vercel"/>
+  </a>
+</p>
