@@ -1,5 +1,18 @@
+// Initialize EmailJS
+(function() {
+    emailjs.init("n958MS_624QVYtVwT"); // Replace with your EmailJS public key
+})();
+
 // Navigation functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize scroll animations
+    initScrollAnimations();
+    // Initialize about carousel
+    initAboutCarousel();
+    // Initialize slider
+    initSlider();
+    // Initialize contact form
+    initContactForm();
     // Mobile navigation toggle
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
@@ -384,4 +397,591 @@ function smoothScrollTo(element, duration = 1000) {
     }
     
     requestAnimationFrame(animation);
+}
+
+// Slider functionality
+function initSlider() {
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const indicators = document.querySelectorAll('.indicator');
+    const sliderTrack = document.querySelector('.slider-track');
+    const imageTitle = document.getElementById('imageTitle');
+    const imageDescription = document.getElementById('imageDescription');
+    
+    let currentSlide = 0;
+    let isAnimating = false;
+    let autoplayInterval;
+    
+    // Image information data
+    const imageInfo = {
+        img1: {
+            title: 'Home Screen',
+            description: 'Main dashboard with financial overview'
+        },
+        img2: {
+            title: 'Transaction List',
+            description: 'View all your income and expenses'
+        },
+        img3: {
+            title: 'Quick Actions',
+            description: 'Add transactions with one tap'
+        },
+        img4: {
+            title: 'Spending Analytics',
+            description: 'Track your spending patterns over time'
+        },
+        img5: {
+            title: 'Category Breakdown',
+            description: 'See where your money goes'
+        },
+        img6: {
+            title: 'Monthly Reports',
+            description: 'Detailed monthly financial reports'
+        },
+        img7: {
+            title: 'Security Settings',
+            description: 'Advanced security and privacy features'
+        },
+        img8: {
+            title: 'Data Protection',
+            description: 'Your financial data is encrypted and secure'
+        },
+        img9: {
+            title: 'Privacy Controls',
+            description: 'Complete control over your data'
+        },
+        img10: {
+            title: 'Biometric Login',
+            description: 'Secure fingerprint authentication'
+        }
+    };
+    
+    // Initialize first slide
+    showSlide(0);
+    
+    // Navigation button handlers
+    prevBtn.addEventListener('click', () => {
+        if (!isAnimating) {
+            goToSlide(currentSlide - 1);
+        }
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        if (!isAnimating) {
+            goToSlide(currentSlide + 1);
+        }
+    });
+    
+    // Indicator click handlers
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            if (!isAnimating) {
+                goToSlide(index);
+            }
+        });
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' && !isAnimating) {
+            goToSlide(currentSlide - 1);
+        } else if (e.key === 'ArrowRight' && !isAnimating) {
+            goToSlide(currentSlide + 1);
+        }
+    });
+    
+    // Touch/swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    const sliderContainer = document.querySelector('.slider-container');
+    
+    sliderContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    sliderContainer.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Swipe left - next slide
+                if (!isAnimating) goToSlide(currentSlide + 1);
+            } else {
+                // Swipe right - previous slide
+                if (!isAnimating) goToSlide(currentSlide - 1);
+            }
+        }
+    }
+    
+    // Show specific slide
+    function showSlide(index) {
+        // Update slide positions
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (i === index) {
+                slide.classList.add('active');
+                animateSlideContent(slide);
+            }
+        });
+        
+        // Update indicators
+        indicators.forEach((indicator, i) => {
+            indicator.classList.remove('active');
+            if (i === index) {
+                indicator.classList.add('active');
+            }
+        });
+        
+        // Update slider track position
+        const offset = -index * 100;
+        sliderTrack.style.transform = `translateX(${offset}%)`;
+        
+        // Update image information
+        const slideId = slides[index].getAttribute('data-slide');
+        const info = imageInfo[slideId];
+        if (info) {
+            imageTitle.textContent = info.title;
+            imageDescription.textContent = info.description;
+        }
+        
+        currentSlide = index;
+    }
+    
+    // Go to slide with animation
+    function goToSlide(index) {
+        if (isAnimating) return;
+        
+        isAnimating = true;
+        
+        // Wrap around
+        if (index < 0) {
+            index = slides.length - 1;
+        } else if (index >= slides.length) {
+            index = 0;
+        }
+        
+        // Animate out current slide
+        const currentSlideElement = slides[currentSlide];
+        const currentScreenshots = currentSlideElement.querySelectorAll('.screenshot');
+        
+        // Animate screenshots out
+        currentScreenshots.forEach((screenshot, i) => {
+            const delay = i * 0.05;
+            setTimeout(() => {
+                screenshot.style.opacity = '0';
+                screenshot.style.transform = 'translateY(-30px) scale(0.9)';
+            }, delay * 1000);
+        });
+        
+        // Wait for out animation, then show new slide
+        setTimeout(() => {
+            showSlide(index);
+            
+            // Reset animation flag after new slide animations complete
+            setTimeout(() => {
+                isAnimating = false;
+            }, 800);
+        }, 300);
+    }
+    
+    // Animate slide content
+    function animateSlideContent(slide) {
+        const screenshot = slide.querySelector('.screenshot');
+        const imageInfo = slide.querySelector('.image-info');
+        
+        // Reset screenshot
+        if (screenshot) {
+            screenshot.style.opacity = '0';
+            screenshot.style.transform = 'translateY(40px) scale(0.8) rotate(5deg)';
+            
+            // Animate screenshot in
+            setTimeout(() => {
+                screenshot.style.opacity = '1';
+                screenshot.style.transform = 'translateY(0) scale(1) rotate(0deg)';
+            }, 100);
+        }
+        
+        // Reset and animate image info
+        if (imageInfo) {
+            imageInfo.style.opacity = '0';
+            imageInfo.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                imageInfo.style.opacity = '1';
+                imageInfo.style.transform = 'translateY(0)';
+            }, 300);
+        }
+    }
+    
+    // Autoplay functionality (optional)
+    function startAutoplay() {
+        autoplayInterval = setInterval(() => {
+            if (!isAnimating) {
+                goToSlide(currentSlide + 1);
+            }
+        }, 5000); // Change slide every 5 seconds
+    }
+    
+    function stopAutoplay() {
+        clearInterval(autoplayInterval);
+    }
+    
+    // Pause autoplay on hover
+    const slider = document.querySelector('.preview-slider');
+    slider.addEventListener('mouseenter', stopAutoplay);
+    slider.addEventListener('mouseleave', startAutoplay);
+    
+    // Start autoplay (comment out if you don't want autoplay)
+    // startAutoplay();
+    
+    // Pause autoplay when user interacts
+    [prevBtn, nextBtn, ...indicators].forEach(element => {
+        element.addEventListener('click', () => {
+            stopAutoplay();
+            setTimeout(startAutoplay, 10000); // Resume after 10 seconds
+        });
+    });
+}
+
+// About Carousel
+function initAboutCarousel() {
+    const slides = document.querySelectorAll('.content-slide');
+    const prevBtn = document.getElementById('aboutPrevBtn');
+    const nextBtn = document.getElementById('aboutNextBtn');
+    const indicators = document.querySelectorAll('.indicator');
+    const contentTrack = document.querySelector('.content-track');
+    
+    let currentSlide = 0;
+    let isAnimating = false;
+    let autoplayInterval;
+    
+    // Initialize first slide
+    showSlide(0);
+    
+    // Navigation button handlers
+    prevBtn.addEventListener('click', () => {
+        if (!isAnimating) {
+            goToSlide(currentSlide - 1);
+        }
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        if (!isAnimating) {
+            goToSlide(currentSlide + 1);
+        }
+    });
+    
+    // Indicator click handlers
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            if (!isAnimating) {
+                goToSlide(index);
+            }
+        });
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' && !isAnimating) {
+            goToSlide(currentSlide - 1);
+        } else if (e.key === 'ArrowRight' && !isAnimating) {
+            goToSlide(currentSlide + 1);
+        }
+    });
+    
+    // Touch/swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    const contentContainer = document.querySelector('.content-container');
+    
+    contentContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    contentContainer.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Swipe left - next slide
+                if (!isAnimating) goToSlide(currentSlide + 1);
+            } else {
+                // Swipe right - previous slide
+                if (!isAnimating) goToSlide(currentSlide - 1);
+            }
+        }
+    }
+    
+    // Show specific slide
+    function showSlide(index) {
+        // Update slide positions
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (i === index) {
+                slide.classList.add('active');
+                animateSlideContent(slide);
+            }
+        });
+        
+        // Update indicators
+        indicators.forEach((indicator, i) => {
+            indicator.classList.remove('active');
+            if (i === index) {
+                indicator.classList.add('active');
+            }
+        });
+        
+        // Update track position
+        const offset = -index * 100;
+        contentTrack.style.transform = `translateX(${offset}%)`;
+        
+        currentSlide = index;
+    }
+    
+    // Go to slide with animation
+    function goToSlide(index) {
+        if (isAnimating) return;
+        
+        isAnimating = true;
+        
+        // Wrap around
+        if (index < 0) {
+            index = slides.length - 1;
+        } else if (index >= slides.length) {
+            index = 0;
+        }
+        
+        // Animate out current slide
+        const currentSlideElement = slides[currentSlide];
+        const currentContent = currentSlideElement.querySelector('.content-item');
+        
+        // Animate content out
+        if (currentContent) {
+            currentContent.style.opacity = '0';
+            currentContent.style.transform = 'translateY(20px)';
+        }
+        
+        // Wait for out animation, then show new slide
+        setTimeout(() => {
+            showSlide(index);
+            
+            // Reset animation flag after new slide animations complete
+            setTimeout(() => {
+                isAnimating = false;
+            }, 600);
+        }, 300);
+    }
+    
+    // Animate slide content
+    function animateSlideContent(slide) {
+        const content = slide.querySelector('.content-item');
+        const title = slide.querySelector('.content-title');
+        const description = slide.querySelector('.content-description');
+        const features = slide.querySelector('.content-features');
+        
+        // Reset elements
+        if (content) {
+            content.style.opacity = '0';
+            content.style.transform = 'translateY(20px)';
+        }
+        
+        // Animate content in
+        setTimeout(() => {
+            if (content) {
+                content.style.opacity = '1';
+                content.style.transform = 'translateY(0)';
+            }
+        }, 100);
+        
+        // Animate other elements with staggered delays
+        if (title) {
+            title.style.opacity = '0';
+            title.style.transform = 'translateY(15px)';
+            setTimeout(() => {
+                title.style.opacity = '1';
+                title.style.transform = 'translateY(0)';
+            }, 200);
+        }
+        
+        if (description) {
+            description.style.opacity = '0';
+            description.style.transform = 'translateY(15px)';
+            setTimeout(() => {
+                description.style.opacity = '1';
+                description.style.transform = 'translateY(0)';
+            }, 300);
+        }
+        
+        if (features) {
+            features.style.opacity = '0';
+            features.style.transform = 'translateY(15px)';
+            setTimeout(() => {
+                features.style.opacity = '1';
+                features.style.transform = 'translateY(0)';
+            }, 400);
+        }
+    }
+    
+    // Autoplay functionality
+    function startAutoplay() {
+        autoplayInterval = setInterval(() => {
+            if (!isAnimating) {
+                goToSlide(currentSlide + 1);
+            }
+        }, 5000); // Change slide every 5 seconds
+    }
+    
+    function stopAutoplay() {
+        clearInterval(autoplayInterval);
+    }
+    
+    // Pause autoplay on hover
+    const carousel = document.querySelector('.about-content');
+    carousel.addEventListener('mouseenter', stopAutoplay);
+    carousel.addEventListener('mouseleave', startAutoplay);
+    
+    // Start autoplay
+    startAutoplay();
+    
+    // Pause autoplay when user interacts
+    [prevBtn, nextBtn, ...indicators].forEach(element => {
+        element.addEventListener('click', () => {
+            stopAutoplay();
+            setTimeout(startAutoplay, 10000); // Resume after 10 seconds
+        });
+    });
+}
+
+// Contact Form
+function initContactForm() {
+    const contactForm = document.querySelector('#contactForm');
+    
+    console.log('Contact form initialization:', contactForm ? 'Form found' : 'Form not found');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Form submitted');
+            
+            const formData = {
+                name: this.querySelector('input[name="name"]').value,
+                email: this.querySelector('input[name="email"]').value,
+                message: this.querySelector('textarea[name="message"]').value
+            };
+            
+            console.log('Form data:', formData);
+            
+            // Validate form
+            if (!formData.name || !formData.email || !formData.message) {
+                showFormMessage('Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(formData.email)) {
+                showFormMessage('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            // Send email using EmailJS
+            const templateParams = {
+                from_name: formData.name,
+                from_email: formData.email,
+                message: formData.message,
+                to_name: 'Daniel Gidey', // Your name
+                reply_to: formData.email // This sets the reply-to field
+            };
+            
+            console.log('Sending email with params:', templateParams);
+            
+            emailjs.send('service_mxtatll', 'template_tqqc3uz', templateParams)
+                .then(function(response) {
+                    console.log('Email sent successfully:', response);
+                    showFormMessage('Message sent successfully! I\'ll get back to you soon.', 'success');
+                    contactForm.reset();
+                }, function(error) {
+                    console.error('EmailJS error:', error);
+                    showFormMessage('Failed to send message. Please try again later.', 'error');
+                });
+        });
+    }
+}
+
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function showFormMessage(message, type) {
+    // Remove any existing messages
+    const existingMessage = document.querySelector('.form-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Create message element
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `form-message ${type}`;
+    messageDiv.textContent = message;
+    
+    // Style the message
+    messageDiv.style.cssText = `
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 4px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.9rem;
+        text-align: center;
+        ${type === 'success' ? 
+            'background: rgba(80, 250, 123, 0.1); color: #50fa7b; border: 1px solid #50fa7b;' : 
+            'background: rgba(255, 85, 85, 0.1); color: #ff5555; border: 1px solid #ff5555;'
+        }
+    `;
+    
+    // Insert message after the form
+    const contactForm = document.querySelector('#contactForm');
+    contactForm.parentNode.insertBefore(messageDiv, contactForm.nextSibling);
+    
+    // Auto-remove message after 5 seconds
+    setTimeout(() => {
+        if (messageDiv.parentNode) {
+            messageDiv.remove();
+        }
+    }, 5000);
+}
+
+// Scroll Animations
+function initScrollAnimations() {
+    const animatedElements = document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right, .scroll-animate-scale, .scroll-animate-rotate');
+    
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+    
+    animatedElements.forEach(element => {
+        observer.observe(element);
+    });
 }
