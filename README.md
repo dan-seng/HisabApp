@@ -1,23 +1,21 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 <!-- ===================== HEADER ===================== -->
 
-<div align="center" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./assets/icon.png'); background-size: contain; background-position: center; background-repeat: no-repeat; padding: 100px 20px; border-radius: 20px; margin: 20px 0; color: white;">
-
-<h1 style="color: white; font-size: 3em; margin-bottom: 20px;">Hisab / ሒሳብ</h1>
-
-<p style="color: white; font-size: 1.5em; margin-bottom: 30px;">
-  <b>Smart Finance. Zero Effort.</b><br/>
-  <i style="font-size: 0.8em;">Track your money automatically — no manual work needed.</i>
+<p align="center">
+  <img src="./assets/icon.png" width="120"/>
 </p>
 
-<p align="center" style="margin-top: 30px;">
+<h1 align="center">💰 Hisab / ሒሳብ</h1>
+
+<p align="center">
+  <b>Smart Finance. Zero Effort.</b><br/>
+  <i>Track your money automatically — no manual work needed.</i>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/Platform-Android-green?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/Offline-First-blue?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/Privacy-100%25-red?style=for-the-badge"/>
 </p>
-
-</div>
 
 ---
 
@@ -101,43 +99,31 @@ It automatically reads your **bank SMS messages** and converts them into a clean
 
 ## 📸 App Preview
 
-<div align="center" style="background: linear-gradient(135deg, #bdbdbd 0%, #181818 100%); padding: 40px; border-radius: 20px; margin: 20px 0;">
+### 🏠 Home Screen
+<p align="center">
+  <img src="./assets/img1.jpg" width="300"/>
+  <img src="./assets/img2.jpg" width="300"/>
+  <img src="./assets/img3.jpg" width="300"/>
+</p>
 
-### <i class="fas fa-home"></i> Home Screen
-<table>
-<tr>
-<td><img src="./assets/img1.jpg" width="300" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);"/></td>
-<td><img src="./assets/img2.jpg" width="300" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);"/></td>
-<td><img src="./assets/img3.jpg" width="300" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);"/></td>
-</tr>
-</table>
+### 📊 Analytics & Insights
+<p align="center">
+  <img src="./assets/img4.jpg" width="300"/>
+  <img src="./assets/img5.jpg" width="300"/>
+  <img src="./assets/img6.jpg" width="300"/>
+</p>
 
-### <i class="fas fa-chart-line"></i> Analytics & Insights
-<table>
-<tr>
-<td><img src="./assets/img4.jpg" width="300" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);"/></td>
-<td><img src="./assets/img5.jpg" width="300" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);"/></td>
-<td><img src="./assets/img6.jpg" width="300" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);"/></td>
-</tr>
-</table>
+### 🔐 Security & Settings
+<p align="center">
+  <img src="./assets/img7.jpg" width="300"/>
+  <img src="./assets/img8.jpg" width="300"/>
+  <img src="./assets/img9.jpg" width="300"/>
+</p>
 
-### <i class="fas fa-shield-alt"></i> Security & Settings
-<table>
-<tr>
-<td><img src="./assets/img7.jpg" width="300" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);"/></td>
-<td><img src="./assets/img8.jpg" width="300" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);"/></td>
-<td><img src="./assets/img9.jpg" width="300" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);"/></td>
-</tr>
-</table>
-
-### <i class="fas fa-fingerprint"></i> Finger Print Scan
-<table>
-<tr>
-<td><img src="./assets/img10.jpg" width="300" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);"/></td>
-</tr>
-</table>
-
-</div>
+### 👆 Finger Print Scan
+<p align="center">
+  <img src="./assets/img10.jpg" width="300"/>
+</p>
 
 ---
 
